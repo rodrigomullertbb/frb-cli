@@ -90,10 +90,9 @@ class Deploy extends AbstractTask
             if ($target === 'remote') {
                 $this->task(FrbRemote::class)->run($config, $task);
             } else {
-                $this->runProcess(new Process(
-                    $command['run'],
-                    rootPath()
-                ));
+                $process = new Process($command['run'], rootPath());
+                $process->setTimeout(1500);
+                $this->runProcess($process);
             }
         });
     }
